@@ -1,7 +1,8 @@
 import psycopg2
 from flask import Flask,request,render_template
 from flask_restful import Resource,Api
-
+from user import *
+from community import *
 
 app = Flask(__name__)
 api = Api(app)
