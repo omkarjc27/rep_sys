@@ -5,8 +5,6 @@ import os
 import hashlib
 import json
 
-api.add_resource(ShowUser,'/user/show/<string:username>')
-
 class CreateUser(Resource):
 	def post(self):
 		# Input

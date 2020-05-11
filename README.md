@@ -122,7 +122,7 @@ curl base_url/community/add_user/ \
 
 **Request :**
 ```
-curl base_url/community/show/ \
+curl base_url/community/ \
     -X GET \
     -H "THE_API_KEY:Abxz7531....."
 ```
@@ -177,7 +177,7 @@ curl base_url/user/award/ \
 
 **Request :**
 ```
-curl base_url/user/show/<username> -X GET
+curl base_url/user/<username> -X GET
 
 ```
 
