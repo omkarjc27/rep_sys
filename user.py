@@ -53,7 +53,7 @@ class UpVote(Resource):
 		if len(r)==0:
 			return 'Invalid API_KEY'
 		community_name = r[0][0]
-		user_list = json.loads(r[0][1])
+		user_list = r[0][1]
 		# Check if user is part of the community
 		flag = False
 		for user in user_list:

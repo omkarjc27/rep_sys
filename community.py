@@ -54,19 +54,19 @@ class AddToCommunity(Resource):
 			return 'Username Does Not Exist'
 		# Check if Community exists or not
 		hsh = str((hashlib.sha256(str(API_KEY).encode())).hexdigest())
-		cur.execute("SELECT community_name from community WHERE API_KEY = %s;",(hsh,))
+		cur.execute("SELECT community_name,user_list from community WHERE API_KEY = %s;",(hsh,))
 		r = cur.fetchall()
 		if len(r)==0:
 			return 'Invalid API_KEY'
 		community_name = r[0][0]
 		# Add user to the community
-		user_list = r[0]
+		user_list = r[0][1]
 		user_list.append({'username':str(user_id),'points':0})
 		cur.execute("UPDATE community SET user_list = %s WHERE API_KEY = %s;",(json.dumps(user_list),hsh))
 		# Add community to the user's list
 		cur.execute("SELECT product_list from users WHERE username = %s;",(user_id,))
 		r = cur.fetchall()
-		score_list = json.loads(r[0][0])
+		score_list = r[0][0]
 		score_list.append({'community':community_name,'product':0})
 		cur.execute("UPDATE users SET product_list = %s WHERE username = %s;",(json.dumps(score_list),user_id))
 
