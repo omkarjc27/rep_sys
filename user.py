@@ -98,13 +98,15 @@ class ShowUser(Resource):
 
 def compile_list_global(in_list):
 	ret_list = {}
+	total = 0
 	for l in in_list:
 		if l['community'] in ret_list:
 			ret_list[l['community']]+=l['global_score']
 		else:
 			ret_list[l['community']]=l['global_score']
+		total += l['global_score']
 
-	return ret_list
+	return {'total_score':total,'community_wise':ret_list}
 
 def h_index(user_list):
 	points_table = []

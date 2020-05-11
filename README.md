@@ -70,10 +70,7 @@ user_list is the list of local scores
 ```
 curl base_url/user/create/ \
     -X POST \
-    -d  '{  \
-            "username" : "sample_user_name", \
-            "email" : "sample_email@mail.com", \
-        }'
+    -d  '{"username" : "sample_user_name", "email" : "sample_email@mail.com"}' \
     -H "Content-Type: application/json"
 ```
 
@@ -87,11 +84,7 @@ curl base_url/user/create/ \
 ```
 curl base_url/community/create/ \
     -X POST \
-    -d  '{  \
-            "community_name" : "sample_community_name", \
-            "email" : "community_email@mail.com", \
-            "desc" : "Description of the community....", \
-        }'
+    -d '{"community_name" : "sample_community_name","email" : "community_email@mail.com","desc" : "Description of the community...."}' \
     -H "Content-Type: application/json"
 ```
 
@@ -107,9 +100,9 @@ curl base_url/community/create/ \
 **Request :**
 ```
 curl base_url/community/add_user/ \
-	-X POST \
-	-d '{"username" : "sample_user_name"}' \
-	-H "THE_API_KEY:Abxz7531....."
+    -X POST \
+    -d '{"username" : "sample_user_name"}' \
+    -H "THE_API_KEY:Your_API_key" \
     -H "Content-Type: application/json"
 ```
 
@@ -126,30 +119,19 @@ curl base_url/community/add_user/ \
 **Request :**
 ```
 curl base_url/community/ \
-    -X GET \
-    -H "THE_API_KEY:Abxz7531....."
+        -X GET \
+        -H "THE_API_KEY:Your_API_key"
 ```
 
 **Ideal Response :**
 ```
 /* All usernames with their corresponding points only from your community*/
-[
-    {
-        'username' : 'username1',
-        'points'   :  76,
-    },
-    {
-        'username' : 'username2',
-        'points'   :  81,
-    },  
-
+{
+    'username1':'x-points',
+    'username2':'y-points',
     ...
-    
-    {
-        'username' : 'username3',
-        'points'   :  1,
-    },
-]
+    'username3':'z-points',
+}
 ```
 
 **Errors**
@@ -188,13 +170,13 @@ curl base_url/user/<username> -X GET
 ```
 {
     'total_score' : 738, \\ The Global Score total
-    'community_wise':[    \\ The Global Scores for all the communities they have been or are a part of
+    'community_wise':{    \\ The Global Scores for all the communities they have been or are a part of
         'community_name1': 32,
         'community_name2': 47,        
         ...
 
         'community_name3': 58,
-    ]
+    }
 }
 ```
 
