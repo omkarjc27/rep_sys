@@ -92,4 +92,14 @@ class ShowComm(Resource):
 		conn.commit()
 		conn.close()
 		cur.close()
-		return r[0][0]
+		return compile_list_local(r[0][0])
+
+def compile_list_local(in_list):
+	ret_list = {}
+	for l in in_list:
+		if l['username'] in ret_list:
+			ret_list[l['username']]+=l['points']
+		else:
+			ret_list[l['username']]=l['points']
+
+	return ret_list

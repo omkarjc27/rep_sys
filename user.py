@@ -89,14 +89,14 @@ class ShowUser(Resource):
 		r = cur.fetchall()
 		if len(r)==0:
 			return 'Invalid Username'
-		compiled_list = compile_list(r[0][0])
+		compiled_list = compile_list_global(r[0][0])
 		conn.commit()
 		conn.close()
 		cur.close()
 		return compiled_list
 
 
-def compile_list(in_list):
+def compile_list_global(in_list):
 	ret_list = {}
 	for l in in_list:
 		if l['community'] in ret_list:
