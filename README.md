@@ -66,6 +66,8 @@ user_list is the list of local scores
 
 ### Create a User Account
 
+**Base URL:**```https://rep-sys.herokuapp.com```
+
 **Request :**
 ```
 curl base_url/user/create/ \
