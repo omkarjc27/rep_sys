@@ -66,7 +66,7 @@ class AddToCommunity(Resource):
 		# Add community to the user's list
 		cur.execute("SELECT product_list from users WHERE username = %s;",(user_id,))
 		r = cur.fetchall()
-		score_list = r[0]
+		score_list = json.loads(r[0])
 		score_list.append({'community':community_name,'product':0})
 		cur.execute("UPDATE users SET product_list = %s WHERE username = %s;",(json.dumps(score_list),user_id))
 
