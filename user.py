@@ -100,9 +100,9 @@ def compile_list(in_list):
 	ret_list = {}
 	for l in in_list:
 		if l['community'] in ret_list:
-			ret_list[l['community']]+=l['product']
+			ret_list[l['community']]+=l['global_score']
 		else:
-			ret_list[l['community']]=l['product']
+			ret_list[l['community']]=l['global_score']
 
 	return ret_list
 
