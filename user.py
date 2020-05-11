@@ -97,7 +97,7 @@ class ShowUser(Resource):
 
 
 def compile_list(in_list):
-	ret_list = []
+	ret_list = {}
 	for l in in_list:
 		if l['community'] in ret_list:
 			ret_list[l['community']]+=l['product']
