@@ -70,10 +70,10 @@ user_list is the list of local scores
 ```
 curl base_url/user/create/ \
     -X POST \
-    -d  {  \
-            'username' : 'sample_user_name', \
-            'email' : 'sample_email@mail.com', \
-        }
+    -d  '{  \
+            "username" : "sample_user_name", \
+            "email" : "sample_email@mail.com", \
+        }'
 ```
 
 **Ideal Response :**```'Successful'```
@@ -86,11 +86,11 @@ curl base_url/user/create/ \
 ```
 curl base_url/community/create/ \
     -X POST \
-    -d  {  \
-            'community_name' : 'sample_community_name', \
-            'email' : 'community_email@mail.com', \
-            'desc' : 'Description of the community....', \
-        }
+    -d  '{  \
+            "community_name" : "sample_community_name", \
+            "email" : "community_email@mail.com", \
+            "desc" : "Description of the community....", \
+        }'
 ```
 
 **Ideal Response :** ```Your_community's_API_KEY```
@@ -106,7 +106,7 @@ curl base_url/community/create/ \
 ```
 curl base_url/community/add_user/ \
 	-X POST \
-	-d {'username' : 'sample_user_name'} \
+	-d '{"username" : "sample_user_name"}' \
 	-H "THE_API_KEY:Abxz7531....."
 ```
 
@@ -161,7 +161,7 @@ curl base_url/community/ \
 ```
 curl base_url/user/award/ \
     -X POST \
-    -d {'username' : 'sample_user_name'} \
+    -d '{"username" : "sample_user_name"}' \
     -H "THE_API_KEY:Abxz7531....."
 ```
 

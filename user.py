@@ -24,7 +24,7 @@ class CreateUser(Resource):
 			else:
 				return 'Email Already in Use'
 		# Add user to table
-		cur.execute("INSERT INTO users (username,product_list,mail) VALUES (%s,%s,%s)",(API_data['username'],json.dumps([]),API_data['mail']))
+		cur.execute("INSERT INTO users (username,product_list,mail) VALUES (%s,%s,%s)",(API_data['username'],json.dumps([]),API_data['email']))
 
 		conn.commit()
 		conn.close()

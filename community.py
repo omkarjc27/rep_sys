@@ -27,7 +27,7 @@ class CreateComm(Resource):
 		# Add community to table
 		hsh_to_return = str((hashlib.sha256((API_data['community_name']+API_data['email']).encode())).hexdigest())
 		hsh_to_store = str((hashlib.sha256((hsh_to_return).encode())).hexdigest())
-		cur.execute("INSERT INTO community (community_name,API_KEY,mail,description,user_list) VALUES (%s,%s,%s,%s,%s)",(API_data['community_name'],hsh_to_store,API_data['mail'],API_data['desc'],json.dumps([])))
+		cur.execute("INSERT INTO community (community_name,API_KEY,mail,description,user_list) VALUES (%s,%s,%s,%s,%s)",(API_data['community_name'],hsh_to_store,API_data['email'],API_data['desc'],json.dumps([])))
 
 		conn.commit()
 		conn.close()
