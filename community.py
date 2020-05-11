@@ -9,6 +9,7 @@ class CreateComm(Resource):
 	def post(self):
 		# Input
 		API_data = request.get_json()
+		print(API_data)
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -16,15 +17,13 @@ class CreateComm(Resource):
 		# Create Table if not exists
 		cur.execute("CREATE TABLE IF NOT EXISTS community (community_name TEXT NOT NULL ,API_KEY TEXT NOT NULL ,mail TEXT NOT NULL ,description TEXT NOT NULL ,user_list json NOT NULL);")
 		# Search if community name or email already exists
-		cur.execute("SELECT community_name from community WHERE community_name = %s",(API_data['community_name'],))
+		cur.execute("SELECT community_name from community WHERE community_name = %s OR mail = %s",(API_data['community_name'],API_data['email'],))
 		r = cur.fetchall()
 		if len(r)>0:
-			return 'Community Name Already in Use'
-
-		cur.execute("SELECT community_name from community WHERE mail = %s",(API_data['email'],))
-		r = cur.fetchall()
-		if len(r)>0:
-			return 'Email Already in Use'
+			if r[0][0] == str(API_data['community_name']):
+				return 'Community Name Already in Use'
+			else:
+				return 'Email Already in Use'
 		# Add community to table
 		hsh_to_return = str((hashlib.sha256((API_data['community_name']+API_data['email']).encode())).hexdigest())
 		hsh_to_store = str((hashlib.sha256((hsh_to_return).encode())).hexdigest())
