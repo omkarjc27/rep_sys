@@ -16,13 +16,15 @@ class CreateUser(Resource):
 		# Create Table if not exists
 		cur.execute("CREATE TABLE IF NOT EXISTS users (username TEXT NOT NULL ,product_list json NOT NULL ,mail TEXT NOT NULL);")
 		# Search if username or email already exists
-		cur.execute("SELECT username from users WHERE username = %s OR mail = %s",(API_data['username'],API_data['email'],))
+		cur.execute("SELECT username from users WHERE username = %s",(API_data['username'],))
 		r = cur.fetchall()
 		if len(r)>0:
-			if r[0][0] == str(API_data['username']):
-				return 'Username Already in Use'
-			else:
-				return 'Email Already in Use'
+			return 'Username Already in Use'
+		
+		cur.execute("SELECT username from users WHERE username = %s OR mail = %s",(API_data['email'],))
+		r = cur.fetchall()
+		if len(r)>0:
+			return 'Email Already in Use'
 		# Add user to table
 		cur.execute("INSERT INTO users (username,product_list,mail) VALUES (%s,%s,%s)",(API_data['username'],json.dumps([]),API_data['mail']))
 

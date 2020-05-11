@@ -69,7 +69,7 @@ user_list is the list of local scores
 **Request :**
 ```
 curl base_url/user/create/ \
-    -X GET \
+    -X POST \
     -d  {  \
             'username' : 'sample_user_name', \
             'email' : 'sample_email@mail.com', \
@@ -85,7 +85,7 @@ curl base_url/user/create/ \
 ### Create a Community
 ```
 curl base_url/community/create/ \
-    -X GET \
+    -X POST \
     -d  {  \
             'community_name' : 'sample_community_name', \
             'email' : 'community_email@mail.com', \
