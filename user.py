@@ -9,6 +9,8 @@ class CreateUser(Resource):
 	def post(self):
 		# Input
 		API_data = request.get_json()
+		if API_data == None:
+			return "Input form Not JSON"
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -37,6 +39,8 @@ class UpVote(Resource):
 		# Inputs
 		API_data = request.get_json()
 		API_KEY = request.headers['THE_API_KEY']
+		if API_data == None or API_KEY == None:
+			return "Input form Not JSON"
 		user_id = API_data['username']
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
@@ -78,7 +82,6 @@ class UpVote(Resource):
 
 class ShowUser(Resource):
 	def get(self,username):
-		API_KEY = request.headers['THE_API_KEY']
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 		cur = conn.cursor()

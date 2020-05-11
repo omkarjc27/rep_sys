@@ -74,6 +74,7 @@ curl base_url/user/create/ \
             "username" : "sample_user_name", \
             "email" : "sample_email@mail.com", \
         }'
+    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :**```'Successful'```
@@ -91,6 +92,7 @@ curl base_url/community/create/ \
             "email" : "community_email@mail.com", \
             "desc" : "Description of the community....", \
         }'
+    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :** ```Your_community's_API_KEY```
@@ -108,6 +110,7 @@ curl base_url/community/add_user/ \
 	-X POST \
 	-d '{"username" : "sample_user_name"}' \
 	-H "THE_API_KEY:Abxz7531....."
+    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :**
@@ -163,6 +166,7 @@ curl base_url/user/award/ \
     -X POST \
     -d '{"username" : "sample_user_name"}' \
     -H "THE_API_KEY:Abxz7531....."
+    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :**
@@ -178,7 +182,6 @@ curl base_url/user/award/ \
 **Request :**
 ```
 curl base_url/user/<username> -X GET
-
 ```
 
 **Ideal Response :**

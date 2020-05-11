@@ -9,7 +9,8 @@ class CreateComm(Resource):
 	def post(self):
 		# Input
 		API_data = request.get_json()
-		print(API_data)
+		if API_data == None:
+			return "Input form Not JSON"
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -40,6 +41,8 @@ class AddToCommunity(Resource):
 		# Inputs
 		API_data = request.get_json()
 		API_KEY = request.headers['THE_API_KEY']
+		if API_data == None or API_KEY == None:
+			return "Input form Not JSON"
 		user_id = API_data['username']
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
@@ -76,6 +79,8 @@ class AddToCommunity(Resource):
 class ShowComm(Resource):
 	def get(self):
 		API_KEY = request.headers['THE_API_KEY']
+		if API_KEY == None:
+			return "API_KEY not found"
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 		cur = conn.cursor()
