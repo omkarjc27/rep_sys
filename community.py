@@ -92,4 +92,4 @@ class ShowComm(Resource):
 		conn.commit()
 		conn.close()
 		cur.close()
-		return r[0]
+		return r[0][0]

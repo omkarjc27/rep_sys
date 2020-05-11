@@ -70,7 +70,7 @@ class UpVote(Resource):
 		h = h_index(user_list)
 		cur.execute("SELECT product_list from users WHERE username = %s;",(user_id,))
 		r = cur.fetchall()
-		score_list = r[0]
+		score_list = r[0][0]
 		score_list.append({'community':community_name,'global_score':h})
 		cur.execute("UPDATE users SET product_list = %s WHERE username = %s;",(json.dumps(score_list),user_id))
 
@@ -89,7 +89,7 @@ class ShowUser(Resource):
 		r = cur.fetchall()
 		if len(r)==0:
 			return 'Invalid Username'
-		compiled_list = compile_list(r[0])
+		compiled_list = compile_list(r[0][0])
 		conn.commit()
 		conn.close()
 		cur.close()
