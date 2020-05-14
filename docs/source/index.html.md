@@ -17,6 +17,53 @@ includes:
 search: true
 ---
 
+# General Working
+For a reputation system that records accross communities and which will be open to every community/team, it has to ensure that a user should not himself create a community and award themselves a lot of points. Also it has to make sure that score is transferable 
+
+i.e. 
+if ```A``` has a reputation score of ```100``` in a ```community of 100 people```   
+& ```B``` has a a reputation score of ```100``` in a ```community of 20 people```
+
+Then ```A``` has a better reputation than ```B```, hence ```A``` should be ranked higher.
+
+For this, I propose a system.
+The system will have two types of score
+1. **Local Score**: Array of Scores of a user, in different communities.
+2. **Global Score** : A single number which will be calculated form the user's local score.
+
+Every user will have a db of local scores for every community they are a part of.
+
+When a user makes contribution to the community in any way (it might be comments,upvotes,posts,code submission,etc..) then the community will award the user with one upvote/point.
+
+Which will get added to the local score of that user, for that given community.So the local score will increase by 1.
+
+But also it will add to the global score of the user, But the global score will be incremented by the [h-index](#h-index) of that community at that point in time.
+
+# h-index
+[Read About it here.](https://en.wikipedia.org/wiki/H-index)
+
+In this system the h-index of a community is the highest value of ```h```
+
+Where 
+
+    h number of users in a community have atleast h local score points.
+
+So more the number of people with a lot of votes in a community more it's h-index will be.
+
+This will take care of the problems stated above.
+
+The only problem that will remain is that a user might create a community where they might keep on adding other users and giving them points 
+
+eg. I might create a community and add 100 users to it and give each of them 100 points that would make my community's h-index 100
+
+Solution to this is restricting the api usage of a given api_key by time like``` x requests per minute.```
+
+```
+In The Code
+product_list is the list of global scores
+user_list is the list of local scores
+```
+
 # Introduction
 
 Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
@@ -25,74 +72,32 @@ We have language bindings in Shell, Ruby, Python, and JavaScript! You can view c
 
 This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
+# Apps
+## Discord
 
-> To authorize, use this code:
+Integrating into a Discord community is easy...(to be updated)
 
-```ruby
-require 'kittn'
+## Reddit
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+Integrating into a Reddit community is easy...(to be updated)
 
-```python
-import kittn
+# Web API
 
-api = kittn.authorize('meowmeowmeow')
-```
+**These API methods should be initially restricted only for the homepage of the platform, where the users can create accounts or communities**
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+**Base URL:**```https://rep-sys.herokuapp.com```
 
-```javascript
-const kittn = require('kittn');
+## Authenticating
+Details on obtaining an API key for the web api approach of integrating into community.
 
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Create User
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+curl base_url/user/create/ \
+    -X POST \
+    -d  '{"username" : "sample_user_name", "email" : "sample_email@mail.com"}' \
+    -H "Content-Type: application/json"
+    -H "Authorization: auth-scheme-to-be-added"
 ```
 
 > The above command returns JSON structured like this:
@@ -116,11 +121,48 @@ let kittens = api.kittens.get();
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint creates a user account.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST <BaseEnpoint>/user/create`
+
+## Create Community
+
+```shell
+curl base_url/community/create/ \
+    -X POST \
+    -d '{"community_name" : "sample_community_name","email" : "community_email@mail.com","desc" : "Description of the community...."}' \
+    -H "Content-Type: application/json"
+    -H "Authorization: meowmeowmeow"
+```
+
+This endpoint creates a community.
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+### HTTP Request
+
+`POST <BaseEnpoint>/community/create`
 
 ### Query Parameters
 
@@ -129,36 +171,15 @@ Parameter | Default | Description
 include_cats | false | If set to true, the result will also include cats.
 available | true | If set to false, the result will include kittens that have already been adopted.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Add User To Community
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+curl base_url/community/add_user/ \
+    -X POST \
+    -d '{"username" : "sample_user_name"}' \
+    -H "THE_API_KEY:Your_API_key" \
+    -H "Content-Type: application/json"
+    -H "Authorization: meowmeowmeow"
 ```
 
 > The above command returns JSON structured like this:
@@ -173,13 +194,11 @@ let max = api.kittens.get(2);
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint adds a user to community.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST <BaseEnpoint>/community/add_user`
 
 ### URL Parameters
 
@@ -187,53 +206,79 @@ Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## Show Community Info
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+curl base_url/community/ \
+      -X GET \
+      -H "THE_API_KEY:Your_API_key"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+    "username1":"x-points",
+    "username2":"y-points",
+    "username3":"z-points",
 }
 ```
 
-This endpoint deletes a specific kitten.
+This endpoint gets community info.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`GET <BaseEnpoint>/community`
 
-### URL Parameters
+## Award 1 Point to User
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+```shell
+curl base_url/user/award/ \
+    -X POST \
+    -d '{"username" : "sample_user_name"}' \
+    -H "THE_API_KEY:Abxz7531....."
+    -H "Content-Type: application/json"
+```
 
+> The above command returns JSON structured like this:
+
+```json
+{
+    "username1":"x-points",
+    "username2":"y-points",
+    "username3":"z-points",
+}
+```
+
+This endpoint awards a point to a user
+
+### HTTP Request
+
+`GET <BaseEnpoint>/user/award`
+
+## Show User Info
+
+```shell
+curl base_url/user/<username> -X GET
+    -H "THE_API_KEY:Abxz7531....."
+    -H "Content-Type: application/json"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "total_score" : 738, \\ The Global Score total
+    "community_wise": {    \\ The Global Scores for all the communities they have been or are a part of
+        "community_name1": 32,
+        "community_name2": 47,
+        "community_name3": 58,
+    }
+}
+```
+
+This endpoint shows user info.
+
+### HTTP Request
+
+`GET <BaseEnpoint>/user/<username>`
