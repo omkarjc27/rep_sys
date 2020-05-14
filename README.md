@@ -70,8 +70,8 @@ user_list is the list of local scores
 
 **Request :**
 ```
-curl base_url/user/create/ \
-    -X POST \
+curl base_url/users/ \
+    -X PUT \
     -d  '{"username" : "sample_user_name", "email" : "sample_email@mail.com"}' \
     -H "Content-Type: application/json"
 ```
@@ -84,8 +84,8 @@ curl base_url/user/create/ \
 
 ### Create a Community
 ```
-curl base_url/community/create/ \
-    -X POST \
+curl base_url/community/ \
+    -X PUT \
     -d '{"community_name" : "sample_community_name","email" : "community_email@mail.com","desc" : "Description of the community...."}' \
     -H "Content-Type: application/json"
 ```
@@ -101,11 +101,9 @@ curl base_url/community/create/ \
 
 **Request :**
 ```
-curl base_url/community/add_user/ \
+curl base_url/community/<sample_user_name> \
     -X POST \
-    -d '{"username" : "sample_user_name"}' \
     -H "THE_API_KEY:Your_API_key" \
-    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :**
@@ -146,11 +144,9 @@ curl base_url/community/ \
 
 **Request :**
 ```
-curl base_url/user/award/ \
+curl base_url/award/<sample_user_name> \
     -X POST \
-    -d '{"username" : "sample_user_name"}' \
     -H "THE_API_KEY:Abxz7531....."
-    -H "Content-Type: application/json"
 ```
 
 **Ideal Response :**
@@ -165,7 +161,7 @@ curl base_url/user/award/ \
 
 **Request :**
 ```
-curl base_url/user/<username> -X GET
+curl base_url/users/<sample_user_name> -X GET
 ```
 
 **Ideal Response :**
