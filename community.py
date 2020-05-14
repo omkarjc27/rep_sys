@@ -6,7 +6,7 @@ import hashlib
 import json
 
 class CreateComm(Resource):
-	def post(self):
+	def put(self):
 		# Input
 		API_data = request.get_json()
 		if API_data == None:
@@ -37,13 +37,11 @@ class CreateComm(Resource):
 		return hsh_to_return
 
 class AddToCommunity(Resource):
-	def post(self):
+	def post(self,user_id):
 		# Inputs
-		API_data = request.get_json()
 		API_KEY = request.headers['THE_API_KEY']
 		if API_data == None or API_KEY == None:
 			return "Input format Not JSON"
-		user_id = API_data['username']
 		# DATABASE Vars
 		DATABASE_URL = os.environ['DATABASE_URL']
 		conn = psycopg2.connect(DATABASE_URL, sslmode='require')
