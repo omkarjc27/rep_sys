@@ -17,7 +17,7 @@ includes:
 search: true
 ---
 
-# General Working
+# Introduction
 For a reputation system that records accross communities and which will be open to every community/team, it has to ensure that a user should not himself create a community and award themselves a lot of points. Also it has to make sure that score is transferable 
 
 i.e. 
@@ -39,7 +39,7 @@ Which will get added to the local score of that user, for that given community.S
 
 But also it will add to the global score of the user, But the global score will be incremented by the [h-index](#h-index) of that community at that point in time.
 
-# h-index
+## h-index
 [Read About it here.](https://en.wikipedia.org/wiki/H-index)
 
 In this system the h-index of a community is the highest value of ```h```
@@ -64,14 +64,6 @@ product_list is the list of global scores
 user_list is the list of local scores
 ```
 
-# Introduction
-
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
 # Apps
 ## Discord
 
@@ -93,8 +85,8 @@ Details on obtaining an API key for the web api approach of integrating into com
 ## Create User
 
 ```shell
-curl base_url/user/create/ \
-    -X POST \
+curl base_url/users/ \
+    -X PUT \
     -d  '{"username" : "sample_user_name", "email" : "sample_email@mail.com"}' \
     -H "Content-Type: application/json"
     -H "Authorization: auth-scheme-to-be-added"
@@ -125,13 +117,13 @@ This endpoint creates a user account.
 
 ### HTTP Request
 
-`POST <BaseEnpoint>/user/create`
+`PUT <BaseEnpoint>/users/`
 
 ## Create Community
 
 ```shell
-curl base_url/community/create/ \
-    -X POST \
+curl base_url/community/ \
+    -X PUT \
     -d '{"community_name" : "sample_community_name","email" : "community_email@mail.com","desc" : "Description of the community...."}' \
     -H "Content-Type: application/json"
     -H "Authorization: meowmeowmeow"
@@ -162,7 +154,7 @@ This endpoint creates a community.
 
 ### HTTP Request
 
-`POST <BaseEnpoint>/community/create`
+`PUT <BaseEnpoint>/community/`
 
 ### Query Parameters
 
@@ -174,12 +166,9 @@ available | true | If set to false, the result will include kittens that have al
 ## Add User To Community
 
 ```shell
-curl base_url/community/add_user/ \
+curl base_url/community/<username> \
     -X POST \
-    -d '{"username" : "sample_user_name"}' \
-    -H "THE_API_KEY:Your_API_key" \
-    -H "Content-Type: application/json"
-    -H "Authorization: meowmeowmeow"
+    -H "THE_API_KEY:Your_API_key"
 ```
 
 > The above command returns JSON structured like this:
@@ -198,7 +187,7 @@ This endpoint adds a user to community.
 
 ### HTTP Request
 
-`POST <BaseEnpoint>/community/add_user`
+`POST <BaseEnpoint>/community/<username>`
 
 ### URL Parameters
 
@@ -210,8 +199,8 @@ ID | The ID of the kitten to retrieve
 
 ```shell
 curl base_url/community/ \
-      -X GET \
-      -H "THE_API_KEY:Your_API_key"
+        -X GET \
+        -H "THE_API_KEY:Your_API_key"
 ```
 
 > The above command returns JSON structured like this:
@@ -233,11 +222,9 @@ This endpoint gets community info.
 ## Award 1 Point to User
 
 ```shell
-curl base_url/user/award/ \
+curl base_url/award/<username> \
     -X POST \
-    -d '{"username" : "sample_user_name"}' \
-    -H "THE_API_KEY:Abxz7531....."
-    -H "Content-Type: application/json"
+    -H "THE_API_KEY:Your_API_KEY"
 ```
 
 > The above command returns JSON structured like this:
@@ -254,14 +241,12 @@ This endpoint awards a point to a user
 
 ### HTTP Request
 
-`GET <BaseEnpoint>/user/award`
+`GET <BaseEnpoint>/user/<username>`
 
 ## Show User Info
 
 ```shell
-curl base_url/user/<username> -X GET
-    -H "THE_API_KEY:Abxz7531....."
-    -H "Content-Type: application/json"
+curl base_url/users/<username> -X GET
 ```
 
 > The above command returns JSON structured like this:
