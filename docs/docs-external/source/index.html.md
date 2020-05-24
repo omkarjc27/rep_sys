@@ -18,60 +18,34 @@ search: true
 ---
 
 # Introduction
-For a reputation system that records accross communities and which will be open to every community/team, it has to ensure that a user should not himself create a community and award themselves a lot of points. Also it has to make sure that score is transferable 
+Rep Sys is a reputation system for collaborative developer groups that build and ship software together on the internet. The goal of the reputation system is to define clear levels of experience, foster collaborative learning, and increase trust among strangers. 
 
-i.e. 
-if ```A``` has a reputation score of ```100``` in a ```community of 100 people```   
-& ```B``` has a a reputation score of ```100``` in a ```community of 20 people```
+# Levels
+A level describes the impact/contributions that a developer has demonstrated on their software projects. 
 
-Then ```A``` has a better reputation than ```B```, hence ```A``` should be ranked higher.
+## Software
+**S59** - New to writing software - does very little to no work independently and requires substantial guidance when working on a software project. Unfamiliar with tools/processes required to collaborate on group software.
 
-For this, I propose a system.
-The system will have two types of score
-1. **Local Score**: Array of Scores of a user, in different communities.
-2. **Global Score** : A single number which will be calculated form the user's local score.
+**S60** - Familiar with writing software - e.g. writes working code. Works independently while requiring some guidance when implementing features, debugging, or resolving general issues. Familiar with tools/processes required to collaborate on group software.
 
-Every user will have a db of local scores for every community they are a part of.
+**S61** - Comfortable writing software. Acts as a guide/mentor to developers on their team. Writes working and well tested code. Works independently with little to no guidance when implementing features, debugging, or resolving general issues. Comfortable with tools/processes required to collaborate on group software.
 
-When a user makes contribution to the community in any way (it might be comments,upvotes,posts,code submission,etc..) then the community will award the user with one upvote/point.
+**S62** - Comfortable writing software and architecting software systems. Acts as a guide/mentor to developers on their team. Writes working and well tested code. Works independently with little to no guidance when implementing features, architecting systems, debugging, or resolving general issues. Comfortable with tools/processes required to collaborate on group software.
 
-Which will get added to the local score of that user, for that given community.So the local score will increase by 1.
+**S63** - Experienced writing software and architecting software systems. Acts as a guide/mentor to developers on their team. Writing working and well tested code isn't enough - values thoughtful software design and makes a concious effort to write clean code. Capable of architecting reliable, highly available, fault tolerant software systems comprising of multiple components and has a deep understanding of going from concept to a deployable production system. Works independently with little to no guidance when implementing features, architecting systems, debugging, or resolving general issues. 
 
-But also it will add to the global score of the user, But the global score will be incremented by the [h-index](#h-index) of that community at that point in time.
+**S64** - Experienced writing software, architecting software systems, and leading a team of developers to build and ship software. Acts as a guide/mentor to developers on their team. Beyond writing great software - elevates their team members and holds them accountable to the software they build and ship. Beyond architecting great software systems - guides their team through technical complexity and architectural discussions where necessary. Capable of architecting a software system comprising of multiple components and has a deep understanding of going from concept to a deployable production system that can scale to millions of users. Works independently with little to no guidance when implementing features, architecting systems, debugging, or resolving general issues. 
 
-## h-index
-[Read About it here.](https://en.wikipedia.org/wiki/H-index)
-
-In this system the h-index of a community is the highest value of ```h```
-
-Where 
-
-    h number of users in a community have atleast h local score points.
-
-So more the number of people with a lot of votes in a community more it's h-index will be.
-
-This will take care of the problems stated above.
-
-The only problem that will remain is that a user might create a community where they might keep on adding other users and giving them points 
-
-eg. I might create a community and add 100 users to it and give each of them 100 points that would make my community's h-index 100
-
-Solution to this is restricting the api usage of a given api_key by time like``` x requests per minute.```
-
-```
-In The Code
-product_list is the list of global scores
-user_list is the list of local scores
-```
+**S65** - Experienced writing software, architecting software systems, and leading multiple teams of developers to build and ship software. Acts as a guide/mentor to developers on their team. Beyond writing great software - elevates their team members and holds them accountable to the software they build and ship. Beyond architecting great software systems - guides their team through technical complexity and architectural discussions where necessary. Capable of architecting a software system comprising of multiple components and has a deep understanding of going from concept to a deployable production system that can scale to millions of users. Works independently with little to no guidance when implementing features, architecting systems, debugging, or resolving general issues. 
 
 # Apps
-## Discord
-
-Integrating into a Discord community is easy...(to be updated)
-
 ## Reddit
 
 Integrating into a Reddit community is easy...(to be updated)
+
+## Discord
+
+Integrating into a Discord community is easy...(to be updated)
 
 # Web API
 
