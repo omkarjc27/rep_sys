@@ -26,7 +26,7 @@ A level describes the impact/contributions that a developer has demonstrated on 
 ## Software
 **S59** - New to writing software - does very little to no work independently and requires substantial guidance when working on a software project. Unfamiliar with tools/processes required to collaborate on group software.
 
-**S60** - Familiar with writing software - e.g. writes working code. Works independently while requiring some guidance when implementing features, debugging, or resolving general issues. Familiar with tools/processes required to collaborate on group software.
+**S60** - Familiar with writing software - writes working code. Works independently while requiring some guidance when implementing features, debugging, or resolving general issues. Familiar with tools/processes required to collaborate on group software.
 
 **S61** - Comfortable writing software. Acts as a guide/mentor to developers on their team. Writes working and well tested code. Works independently with little to no guidance when implementing features, debugging, or resolving general issues. Comfortable with tools/processes required to collaborate on group software.
 
